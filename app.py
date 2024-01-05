@@ -44,6 +44,15 @@ def main():
         # Display the prediction
         st.write(f'Model Prediction: {np.argmax(prediction)}')
 
+         # Feedback interface
+        user_feedback = st.radio("Was the prediction correct?", ("Correct", "Incorrect"))
+
+    # Store incorrect predictions
+        if user_feedback == "Incorrect":
+            # Store the image, predicted label, and actual label in a database or folder
+            # For simplicity, let's create a folder named 'incorrect_predictions'
+            img.save(f'incorrect_predictions/{digit}_actual_{uploaded_file.name}')
+
 # Run the Streamlit app
 if __name__ == '__main__':
     main()
