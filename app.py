@@ -1,5 +1,5 @@
 # app.py
-
+import os
 import streamlit as st
 import numpy as np
 from PIL import Image
@@ -32,9 +32,19 @@ def main():
         user_feedback = st.radio("Was the prediction correct?", ("Correct", "Incorrect"))
 
         # Store incorrect predictions
-        if user_feedback == "Incorrect":
-            correct_label = st.selectbox("Select the correct label:", list(range(10)))
-            #img.save(f'incorrect_predictions/{digit}_actual_{uploaded_file.name}')
+        
+        # Save incorrect predictions
+    if user_feedback == "Incorrect":
+        correct_label = st.selectbox("Select the correct label:", list(range(10)))
+
+        # Create the "incorrect_predictions" folder if it doesn't exist
+        save_path = 'incorrect_predictions'
+        os.makedirs(save_path, exist_ok=True)
+
+        # Save incorrect prediction
+        Image.fromarray((img.squeeze() * 255).astype('uint8')).save(f'{save_path}/{correct_label}_actual_{np.argmax(prediction)}_predicted_{uploaded_file.name}')
+        st.write("Incorrect prediction saved!")
+
 
 # Run the Streamlit app
 if __name__ == '__main__':
