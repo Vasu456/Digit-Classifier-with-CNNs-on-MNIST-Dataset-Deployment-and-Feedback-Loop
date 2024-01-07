@@ -7,7 +7,7 @@ from tensorflow.keras.models import load_model
 import cv2
 
 # Load the trained model
-model = load_model('cnn_model.h5')
+model = load_model('fine_tuned_model.h5')
 
 # Streamlit app code
 def main():
@@ -34,17 +34,17 @@ def main():
         # Store incorrect predictions
         
         # Save incorrect predictions
-    if user_feedback == "Incorrect":
-        correct_label = st.selectbox("Select the correct label:", list(range(10)))
+        if user_feedback == "Incorrect":
+            correct_label = st.selectbox("Select the correct label:", list(range(10)))
 
-        # Create the "incorrect_predictions" folder if it doesn't exist
-        save_path = 'incorrect_predictions'
-        os.makedirs(save_path, exist_ok=True)
+            # Create the "incorrect_predictions" folder if it doesn't exist
+            save_path = 'incorrect_predictions'
+            os.makedirs(save_path, exist_ok=True)
 
-        # Save incorrect prediction
-        Image.fromarray((img.squeeze() * 255).astype('uint8')).save(f'{save_path}/{correct_label}_actual_{np.argmax(prediction)}_predicted_{uploaded_file.name}')
-        st.write("Incorrect prediction saved!")
-
+            # Save incorrect prediction
+            #Image.fromarray((img.squeeze() * 255).astype('uint8')).save(f'{save_path}/{correct_label}_actual_{np.argmax(prediction)}_predicted_{uploaded_file.name}')
+            Image.fromarray((img.squeeze() * 255).astype('uint8')).save(f'{save_path}/{correct_label}_actual_{correct_label}_predicted_{np.argmax(prediction)}_{uploaded_file.name}')
+            st.write("Incorrect prediction saved!")
 
 # Run the Streamlit app
 if __name__ == '__main__':
