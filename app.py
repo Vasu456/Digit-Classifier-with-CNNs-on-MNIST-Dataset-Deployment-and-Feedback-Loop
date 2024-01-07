@@ -7,7 +7,7 @@ from tensorflow.keras.models import load_model
 import cv2
 
 # Load the trained model
-model = load_model('fine_tuned_model.h5')
+model = load_model('cnn_model.h5')
 
 # Streamlit app code
 def main():
